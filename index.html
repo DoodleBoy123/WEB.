@@ -2,30 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Mini Plex 🎬</title>
+  <title>Mini Plex - Movies & Series</title>
   <style>
-    body {
-      background-color: #121212;
-      color: #fff;
-      font-family: 'Segoe UI', sans-serif;
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
       margin: 0;
       padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #121212;
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 0;
     }
 
     header {
       text-align: center;
-      padding: 30px 20px;
+      padding: 20px;
       font-size: 2rem;
-      background-color: #1f1f1f;
+      background-color: rgba(18, 18, 18, 0.9);
       border-bottom: 2px solid #333;
       color: #ff9800;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      background-color: #1f1f1f;
+      padding: 10px 0;
+      gap: 20px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: #2a2a2a;
+      border-radius: 6px;
+      cursor: pointer;
+      color: #fff;
+      transition: 0.2s;
+    }
+
+    .tab.active {
+      background-color: #ff9800;
+      color: #000;
     }
 
     .library {
-      display: grid;
+      display: none;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
       gap: 20px;
       padding: 30px;
+      position: relative;
+      z-index: 2;
+    }
+
+    .library.active {
+      display: grid;
     }
 
     .movie {
@@ -43,7 +87,6 @@
 
     .movie img {
       width: 100%;
-      height: auto;
       display: block;
     }
 
@@ -91,47 +134,110 @@
 </head>
 <body>
 
-  <header>🎥 Mini Plex - Movie Time</header>
+<canvas id="bg"></canvas>
 
-  <div class="library">
-    <!-- Movie 1 -->
-    <div class="movie" onclick="playMovie('https://dn721904.ca.archive.org/0/items/Popcornarchive-spider-manIntoTheSpiderVerse2018/Popcornarchive-spider-manIntoTheSpiderVerse2018.mp4')">
-      <img src="https://resizing.flixster.com/9w0UmN4iO71K40n8ZV5y2Ff4M0c=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/NowShowing/181510/181510_aa.jpg" alt="Into the Spider-Verse">
-      <div class="movie-title">Into the Spider-Verse</div>
-    </div>
+<header>🎬 Mini Plex - Movie Time</header>
 
-    <!-- Movie 2 -->
-    <div class="movie" onclick="playMovie('https://dn720307.ca.archive.org/0/items/spider.-man.-across.-the.-spider.-verse.-2023.-multi.-truefrench.-1080p.-webrip./Spider.Man.Across.The.Spider.Verse.2023.MULTi.TRUEFRENCH.1080p.WEBRip.H264.Wawacity.homes.mp4')">
-      <img src="https://m.media-amazon.com/images/I/8105Oc1+FPL.jpg" alt="Across the Spider-Verse">
-      <div class="movie-title">Across the Spider-Verse</div>
-    </div>
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('movies')">🎞️ Movies</div>
+  <div class="tab" onclick="switchTab('series')">📺 Series</div>
+</div>
+
+<div class="library active" id="movies">
+  <div class="movie" onclick="playMovie('https://dn721904.ca.archive.org/0/items/Popcornarchive-spider-manIntoTheSpiderVerse2018/Popcornarchive-spider-manIntoTheSpiderVerse2018.mp4')">
+    <img src="https://resizing.flixster.com/9w0UmN4iO71K40n8ZV5y2Ff4M0c=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/NowShowing/181510/181510_aa.jpg" alt="Spider-Verse">
+    <div class="movie-title">Into the Spider-Verse</div>
   </div>
 
-  <!-- Modal Video Player -->
-  <div class="modal" id="playerModal" onclick="closeModal()">
-    <div class="modal-content" onclick="event.stopPropagation()">
-      <span class="close-btn" onclick="closeModal()">&times;</span>
-      <video id="modalVideo" controls autoplay></video>
-    </div>
+  <div class="movie" onclick="playMovie('https://dn720307.ca.archive.org/0/items/spider.-man.-across.-the.-spider.-verse.-2023.-multi.-truefrench.-1080p.-webrip./Spider.Man.Across.The.Spider.Verse.2023.MULTi.TRUEFRENCH.1080p.WEBRip.H264.Wawacity.homes.mp4')">
+    <img src="https://m.media-amazon.com/images/I/8105Oc1+FPL.jpg" alt="Spider-Verse 2">
+    <div class="movie-title">Across the Spider-Verse</div>
   </div>
+</div>
 
-  <script>
-    function playMovie(filename) {
-      const modal = document.getElementById("playerModal");
-      const video = document.getElementById("modalVideo");
-      video.src = filename;
-      modal.style.display = "flex";
-    }
+<div class="library" id="series">
+  <div class="movie" onclick="playMovie('https://archive.org/download/squid-game-season-1-complete-1080p/Squid.Game.S01E01.mp4')">
+    <img src="https://m.media-amazon.com/images/M/MV5BYzJlN2I1OTctN2Y1OS00NzVkLTkzOWYtYjMyYmY5NDQwNWEyXkEyXkFqcGdeQXVyMTMxODk2OTU@._V1_.jpg" alt="Squid Game">
+    <div class="movie-title">Squid Game S1E1</div>
+  </div>
+</div>
 
-    function closeModal() {
-      const modal = document.getElementById("playerModal");
-      const video = document.getElementById("modalVideo");
-      video.pause();
-      video.currentTime = 0;
-      video.src = "";
-      modal.style.display = "none";
+<!-- Modal -->
+<div class="modal" id="playerModal" onclick="closeModal()">
+  <div class="modal-content" onclick="event.stopPropagation()">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <video id="modalVideo" controls autoplay></video>
+  </div>
+</div>
+
+<script>
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.library').forEach(lib => lib.classList.remove('active'));
+
+    document.getElementById(tabId).classList.add('active');
+    document.querySelector(`.tab[onclick="switchTab('${tabId}')"]`).classList.add('active');
+  }
+
+  function playMovie(src) {
+    const modal = document.getElementById('playerModal');
+    const video = document.getElementById('modalVideo');
+    video.src = src;
+    modal.style.display = 'flex';
+  }
+
+  function closeModal() {
+    const modal = document.getElementById('playerModal');
+    const video = document.getElementById('modalVideo');
+    video.pause();
+    video.src = "";
+    modal.style.display = 'none';
+  }
+
+  // Animated background
+  const canvas = document.getElementById('bg');
+  const ctx = canvas.getContext('2d');
+  let w, h;
+  let lines = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+    lines = [];
+    for (let i = 0; i < 80; i++) {
+      lines.push({
+        x: Math.random() * w,
+        y: Math.random() * h,
+        length: Math.random() * 100 + 50,
+        speed: Math.random() * 1 + 0.5,
+        alpha: Math.random() * 0.5 + 0.2
+      });
     }
-  </script>
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    ctx.strokeStyle = '#00ffcc';
+    lines.forEach(line => {
+      ctx.globalAlpha = line.alpha;
+      ctx.beginPath();
+      ctx.moveTo(line.x, line.y);
+      ctx.lineTo(line.x, line.y + line.length);
+      ctx.stroke();
+
+      line.y += line.speed;
+      if (line.y > h) {
+        line.y = -line.length;
+        line.x = Math.random() * w;
+      }
+    });
+    requestAnimationFrame(animate);
+  }
+
+  window.addEventListener('resize', resize);
+  resize();
+  animate();
+</script>
 
 </body>
 </html>
