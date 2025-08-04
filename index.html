@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mini Plex 🎬</title>
+  <style>
+    body {
+      background-color: #121212;
+      color: #fff;
+      font-family: 'Segoe UI', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      text-align: center;
+      padding: 30px 20px;
+      font-size: 2rem;
+      background-color: #1f1f1f;
+      border-bottom: 2px solid #333;
+      color: #ff9800;
+    }
+
+    .library {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 20px;
+      padding: 30px;
+    }
+
+    .movie {
+      background-color: #1e1e1e;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 0 10px rgba(0,0,0,0.3);
+      transition: transform 0.2s;
+      cursor: pointer;
+    }
+
+    .movie:hover {
+      transform: scale(1.05);
+    }
+
+    .movie img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .movie-title {
+      text-align: center;
+      padding: 10px;
+      font-weight: bold;
+    }
+
+    /* Modal Player */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 100;
+      left: 0; top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal video {
+      width: 90%;
+      max-width: 900px;
+      border-radius: 12px;
+      box-shadow: 0 0 30px rgba(255,255,255,0.1);
+    }
+
+    .close-btn {
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      color: #fff;
+      cursor: pointer;
+      z-index: 101;
+    }
+  </style>
+</head>
+<body>
+
+  <header>🎥 Mini Plex - Movie Time</header>
+
+  <div class="library">
+    <!-- Movie 1 -->
+    <div class="movie" onclick="playMovie('https://dn721904.ca.archive.org/0/items/Popcornarchive-spider-manIntoTheSpiderVerse2018/Popcornarchive-spider-manIntoTheSpiderVerse2018.mp4')">
+      <img src="https://resizing.flixster.com/9w0UmN4iO71K40n8ZV5y2Ff4M0c=/fit-in/705x460/v2/https://resizing.flixster.com/-XZAfHZM39UwaGJIFWKAE8fS0ak=/v3/t/NowShowing/181510/181510_aa.jpg" alt="Into the Spider-Verse">
+      <div class="movie-title">Into the Spider-Verse</div>
+    </div>
+
+    <!-- Movie 2 -->
+    <div class="movie" onclick="playMovie('https://dn720307.ca.archive.org/0/items/spider.-man.-across.-the.-spider.-verse.-2023.-multi.-truefrench.-1080p.-webrip./Spider.Man.Across.The.Spider.Verse.2023.MULTi.TRUEFRENCH.1080p.WEBRip.H264.Wawacity.homes.mp4')">
+      <img src="https://m.media-amazon.com/images/I/8105Oc1+FPL.jpg" alt="Across the Spider-Verse">
+      <div class="movie-title">Across the Spider-Verse</div>
+    </div>
+
+    <!-- Add more movies below -->
+    <!-- Just copy the .movie block and change the filenames and titles -->
+  </div>
+
+  <!-- Modal Video Player -->
+  <div class="modal" id="playerModal" onclick="closeModal()">
+    <span class="close-btn" onclick="closeModal()">&times;</span>
+    <video id="modalVideo" controls autoplay></video>
+  </div>
+
+  <script>
+    function playMovie(filename) {
+      const modal = document.getElementById("playerModal");
+      const video = document.getElementById("modalVideo");
+      video.src = filename;
+      modal.style.display = "flex";
+    }
+
+    function closeModal() {
+      const modal = document.getElementById("playerModal");
+      const video = document.getElementById("modalVideo");
+      video.pause();
+      video.currentTime = 0;
+      modal.style.display = "none";
+    }
+  </script>
+
+</body>
+</html>
