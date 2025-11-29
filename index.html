@@ -390,6 +390,72 @@
       pointer-events: none;
     }
 
+    /* Corner badges (Windows + category) */
+    .corner-badges {
+      position: absolute;
+      top: 0.6rem;
+      left: 0.7rem;
+      display: flex;
+      gap: 0.35rem;
+      z-index: 3;
+    }
+
+    .os-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.75);
+      border: 1px solid rgba(0, 200, 255, 0.8);
+      backdrop-filter: blur(6px);
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #e2f8ff;
+    }
+
+    .os-logo {
+      width: 14px;
+      height: 14px;
+      background-image: url("PUT_YOUR_WINDOWS_LOGO_URL_HERE"); /* <--- drop your PNG URL here */
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: center;
+      filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.9));
+      flex-shrink: 0;
+    }
+
+    .cat-badge {
+      padding: 0.15rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      backdrop-filter: blur(6px);
+      color: #f5f5f5;
+      white-space: nowrap;
+    }
+
+    .cat-cheetos {
+      background: rgba(255, 0, 102, 0.16);
+      border-color: rgba(255, 0, 102, 0.85);
+      color: #ffd9ec;
+    }
+
+    .cat-woofers {
+      background: rgba(88, 101, 242, 0.18);
+      border-color: rgba(88, 101, 242, 0.9);
+      color: #dde1ff;
+    }
+
+    .cat-cleaners {
+      background: rgba(0, 255, 170, 0.16);
+      border-color: rgba(0, 255, 170, 0.9);
+      color: #d9ffef;
+    }
+
     .game-content {
       position: absolute;
       left: 0;
@@ -458,7 +524,7 @@
       opacity: 0.85;
     }
 
-    /* Status chip (updated / detected / safe) */
+    /* Status chip (just styling text now) */
     .status-chip {
       padding: 0.2rem 0.6rem;
       border-radius: 999px;
@@ -468,24 +534,8 @@
       border: 1px solid rgba(255, 255, 255, 0.16);
       background: rgba(5, 5, 12, 0.96);
       backdrop-filter: blur(10px);
-    }
-
-    .status-updated {
-      border-color: rgba(0, 255, 170, 0.9);
-      box-shadow: 0 0 8px rgba(0, 255, 170, 0.6);
-      color: #dffff8;
-    }
-
-    .status-safe {
-      border-color: rgba(0, 255, 255, 0.9);
-      box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
-      color: #e2fbff;
-    }
-
-    .status-detected {
-      border-color: rgba(255, 0, 0, 0.85);
-      box-shadow: 0 0 10px rgba(255, 0, 0, 0.65);
-      color: #ffe0e0;
+      color: #eaf6ff;
+      white-space: nowrap;
     }
 
     /* Download tooltip line */
@@ -649,9 +699,9 @@
         status: "Safe & Updated",
         category: "Cheetos"
       },
-      // Example when you add more:
-      // { name: "Some Cleaner", img: "URL", code: "XXXXXX", status: "detected", category: "Cleaners" },
-      // { name: "Some Woofer", img: "URL", code: "XXXXXX", status: "safe", category: "Woofers" },
+      // add more:
+      // { name: "Some Cleaner", img: "URL", code: "XXXXXX", status: "Detected", category: "Cleaners" },
+      // { name: "Some Woofer",  img: "URL", code: "XXXXXX", status: "Safe",     category: "Woofers"  },
     ];
 
     const container = document.getElementById("games");
@@ -684,14 +734,23 @@
         const card = document.createElement("article");
         card.className = "game";
 
+        const categoryClass = `cat-${game.category.toLowerCase()}`;
+
         card.innerHTML = `
           <div class="game-img-wrap">
+            <div class="corner-badges">
+              <div class="os-badge">
+                <span class="os-logo"></span>
+                <span>Windows</span>
+              </div>
+              <div class="cat-badge ${categoryClass}">${game.category}</div>
+            </div>
             <img src="${game.img}" alt="${game.name}">
             <div class="overlay-gradient"></div>
             <div class="game-content">
               <div class="game-title">${game.name}</div>
               <div class="game-meta">
-                <span class="status-chip status-${game.status}">${game.status}</span>
+                <span class="status-chip">${game.status}</span>
                 <div class="download-hint">
                   <span class="download-dot"></span>
                   <span>Direct download</span>
