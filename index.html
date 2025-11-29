@@ -255,9 +255,52 @@
       font-weight: 500;
     }
 
+    /* Tabs */
+    .tabs-wrapper {
+      max-width: 1600px;
+      margin: 1.1rem auto 0.7rem;
+      padding: 0 1.5rem;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .tabs {
+      display: inline-flex;
+      gap: 0.5rem;
+      padding: 0.25rem;
+      border-radius: 999px;
+      background: rgba(6, 6, 14, 0.95);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 26px rgba(0,0,0,0.7);
+    }
+
+    .tab-btn {
+      border: none;
+      outline: none;
+      padding: 0.35rem 0.95rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      cursor: pointer;
+      background: transparent;
+      color: var(--text-muted);
+      transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+      white-space: nowrap;
+    }
+
+    .tab-btn.active {
+      background: radial-gradient(circle at top left, rgba(255, 0, 102, 0.35), rgba(0, 0, 0, 0.95));
+      color: #fff;
+      box-shadow:
+        0 0 12px rgba(255, 0, 102, 0.7),
+        0 10px 24px rgba(0, 0, 0, 0.85);
+      transform: translateY(-1px);
+    }
+
     /* Main grid */
     .section-head {
-      margin: 0 auto 1.2rem;
+      margin: 0 auto 0.4rem;
       max-width: 1600px;
       text-align: left;
       padding: 0 1.5rem;
@@ -558,6 +601,15 @@
       </p>
     </div>
 
+    <!-- Tabs -->
+    <div class="tabs-wrapper">
+      <div class="tabs">
+        <button class="tab-btn active" data-tab="Cheetos">Cheetos</button>
+        <button class="tab-btn" data-tab="Woofers">Woofers</button>
+        <button class="tab-btn" data-tab="Cleaners">Cleaners</button>
+      </div>
+    </div>
+
     <div class="container" id="games"></div>
 
     <div class="after-grid-note">
@@ -579,32 +631,33 @@
     // ============================
     // 🔗 EASY LINK EDIT SECTION
     // ============================
-    // If Gofile ever changes domain / path, just change this ONE value:
     const GOFILE_BASE = "https://gofile.io/d/";
 
-    // For each game, only change the "code" field + "status".
-    // status can be: "updated", "safe", "detected"
-    // Full link will be GOFILE_BASE + code
+    // category: "Cheetos", "Woofers", "Cleaners"
     const games = [
       { 
         name: "Descenders",
         img: "https://switchplayer.net/wp-content/uploads/2020/12/descenders-switch-hero.jpg",
         code: "G4NhIv",
-        status: "Safe & Updated"
+        status: "Safe & Updated",
+        category: "Cheetos"
       },
       {
         name: "GTA V Enhanced",
         img: "https://image.api.playstation.com/vulcan/ap/rnd/202203/0911/VIB0SeEj9vT6DTv7P4thJLZi.jpg",
         code: "vdpysg",
-        status: "Safe & Updated"
+        status: "Safe & Updated",
+        category: "Cheetos"
       },
-      // add more:
-      // { name: "Game Name", img: "IMAGE_URL", code: "GOFILE_CODE", status: "detected" },
+      // Example when you add more:
+      // { name: "Some Cleaner", img: "URL", code: "XXXXXX", status: "detected", category: "Cleaners" },
+      // { name: "Some Woofer", img: "URL", code: "XXXXXX", status: "safe", category: "Woofers" },
     ];
 
     const container = document.getElementById("games");
     const toast = document.getElementById("toast");
     const toastText = document.getElementById("toast-text");
+    const tabButtons = document.querySelectorAll(".tab-btn");
     let toastTimeout;
 
     function showToast(message) {
@@ -617,65 +670,84 @@
       }, 2600);
     }
 
-    games.forEach(game => {
-      const card = document.createElement("article");
-      card.className = "game";
+    function renderGames(activeCategory) {
+      container.innerHTML = "";
 
-      card.innerHTML = `
-        <div class="game-img-wrap">
-          <img src="${game.img}" alt="${game.name}">
-          <div class="overlay-gradient"></div>
-          <div class="game-content">
-            <div class="game-title">${game.name}</div>
-            <div class="game-meta">
-              <span class="status-chip status-${game.status}">${game.status}</span>
-              <div class="download-hint">
-                <span class="download-dot"></span>
-                <span>Direct download</span>
+      const filtered = games.filter(g => g.category === activeCategory);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<p style="grid-column:1/-1; color:var(--text-muted); font-size:0.9rem;">Nothing in <strong>${activeCategory}</strong> yet. Check another tab or bug Olly to upload something 😈</p>`;
+        return;
+      }
+
+      filtered.forEach(game => {
+        const card = document.createElement("article");
+        card.className = "game";
+
+        card.innerHTML = `
+          <div class="game-img-wrap">
+            <img src="${game.img}" alt="${game.name}">
+            <div class="overlay-gradient"></div>
+            <div class="game-content">
+              <div class="game-title">${game.name}</div>
+              <div class="game-meta">
+                <span class="status-chip status-${game.status}">${game.status}</span>
+                <div class="download-hint">
+                  <span class="download-dot"></span>
+                  <span>Direct download</span>
+                </div>
+              </div>
+              <div class="game-badges">
+                <span class="badge badge-free">Free</span>
+                <span class="badge badge-safe">No ads</span>
+                <span class="badge badge-ver">Tutorial file</span>
               </div>
             </div>
-            <div class="game-badges">
-              <span class="badge badge-free">Free</span>
-              <span class="badge badge-safe">No ads</span>
-              <span class="badge badge-ver">Tutorial file</span>
-            </div>
           </div>
-        </div>
-      `;
+        `;
 
-      card.onclick = () => {
-        const a = document.createElement("a");
-        a.href = GOFILE_BASE + game.code;
-        a.download = "";
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
+        card.onclick = () => {
+          const a = document.createElement("a");
+          a.href = GOFILE_BASE + game.code;
+          a.download = "";
+          document.body.appendChild(a);
+          a.click();
+          document.body.removeChild(a);
 
-        showToast(`<strong>${game.name}</strong> is dropping into your downloads… LET'S GO.`);
-      };
+          showToast(`<strong>${game.name}</strong> is dropping into your downloads… LET'S GO.`);
+        };
 
-      container.appendChild(card);
+        container.appendChild(card);
+      });
+    }
+
+    // Tab events
+    tabButtons.forEach(btn => {
+      btn.addEventListener("click", () => {
+        tabButtons.forEach(b => b.classList.remove("active"));
+        btn.classList.add("active");
+        const category = btn.getAttribute("data-tab");
+        renderGames(category);
+      });
     });
+
+    // Initial render
+    renderGames("Cheetos");
   </script>
 
   <!-- Anti right-click / basic anti-debug -->
   <script>
-    // Disable right-click / context menu
     document.addEventListener('contextmenu', function (e) {
       e.preventDefault();
     });
 
-    // Block some common devtools / view-source shortcuts
     document.addEventListener('keydown', function (e) {
-      // F12
       if (e.key === 'F12') {
         e.preventDefault();
       }
-      // Ctrl+Shift+I / J / C
       if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
         e.preventDefault();
       }
-      // Ctrl+U (view source), Ctrl+S (save), Ctrl+P (print)
       if (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P')) {
         e.preventDefault();
       }
