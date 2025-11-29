@@ -589,13 +589,13 @@
       { 
         name: "Descenders",
         img: "https://switchplayer.net/wp-content/uploads/2020/12/descenders-switch-hero.jpg",
-        code: "YOUR_DESCENDERS_CODE_HERE",
+        code: "G4NhIv",
         status: "Safe & Updated"
       },
       {
-        name: "GTA V",
+        name: "GTA V Enhanced",
         img: "https://image.api.playstation.com/vulcan/ap/rnd/202203/0911/VIB0SeEj9vT6DTv7P4thJLZi.jpg",
-        code: "YOUR_GTAV_CODE_HERE",
+        code: "vdpysg",
         status: "Safe & Updated"
       },
       // add more:
@@ -655,6 +655,30 @@
       };
 
       container.appendChild(card);
+    });
+  </script>
+
+  <!-- Anti right-click / basic anti-debug -->
+  <script>
+    // Disable right-click / context menu
+    document.addEventListener('contextmenu', function (e) {
+      e.preventDefault();
+    });
+
+    // Block some common devtools / view-source shortcuts
+    document.addEventListener('keydown', function (e) {
+      // F12
+      if (e.key === 'F12') {
+        e.preventDefault();
+      }
+      // Ctrl+Shift+I / J / C
+      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) {
+        e.preventDefault();
+      }
+      // Ctrl+U (view source), Ctrl+S (save), Ctrl+P (print)
+      if (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P')) {
+        e.preventDefault();
+      }
     });
   </script>
 </body>
