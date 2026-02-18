@@ -1,300 +1,177 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Olly's Logitech Scripts</title>
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --bg-main: #05040a;
-      --accent: #ff0066;
-      --accent-alt: #00f6ff;
-      --text-main: #f5f5f5;
-      --text-muted: #8b8b8b;
-      --border-soft: rgba(255, 255, 255, 0.1);
-      --card-bg: rgba(9, 9, 18, 0.96);
-    }
-    * {
-      box-sizing: border-box;
-    }
-    body {
-      margin: 0;
-      min-height: 100vh;
-      background: radial-gradient(circle at top, #20122e 0%, #05040a 45%, #020207 100%);
-      color: var(--text-main);
-      font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      text-align: center;
-      display: flex;
-      flex-direction: column;
-    }
-    /* Animated subtle background */
-    body::before {
-      content: "";
-      position: fixed;
-      inset: -20%;
-      background:
-        radial-gradient(circle at 15% 20%, rgba(255, 0, 102, 0.35), transparent 55%),
-        radial-gradient(circle at 80% 10%, rgba(0, 255, 255, 0.3), transparent 55%),
-        radial-gradient(circle at 50% 80%, rgba(162, 0, 255, 0.25), transparent 55%);
-      opacity: 0.45;
-      filter: blur(40px);
-      z-index: -1;
-      animation: glowShift 22s ease-in-out infinite alternate;
-    }
-    @keyframes glowShift {
-      0% { transform: translate3d(0, 0, 0) scale(1); }
-      50% { transform: translate3d(0, -15px, 0) scale(1.02); }
-      100% { transform: translate3d(-10px, 10px, 0) scale(1.01); }
-    }
-    main { width: 100%; max-width: 1600px; margin: 0 auto; padding: 1.5rem 1.5rem 3rem; flex: 1 0 auto; }
-    header { display: flex; align-items: center; justify-content: space-between; gap: 1.5rem; padding: 1.25rem 1.5rem; margin: 0 auto 1.5rem; max-width: 1600px; }
-    @media (max-width: 720px) { header { flex-direction: column; text-align: center; align-items: flex-start; } }
-    .brand { display: flex; flex-direction: column; gap: 0.4rem; align-items: flex-start; }
-    h1 { font-family: 'Orbitron', sans-serif; font-size: clamp(2.1rem, 3.4vw, 2.8rem); margin: 0; text-transform: uppercase; letter-spacing: 0.16em; text-align: left; text-shadow: 0 0 10px rgba(255, 0, 102, 0.8), 0 0 18px rgba(0, 255, 255, 0.5); }
-    .subtitle { margin-top: 0.15rem; font-size: 0.95rem; color: var(--text-muted); text-align: left; }
-    .header-right { display: flex; flex-direction: column; align-items: flex-end; gap: 0.7rem; }
-    @media (max-width: 720px) { .header-right { align-items: flex-start; } }
-    .pill-row { display: flex; flex-wrap: wrap; gap: 0.7rem; justify-content: flex-end; }
-    .pill { padding: 0.35rem 0.85rem; border-radius: 999px; font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.14em; border: 1px solid var(--border-soft); background: linear-gradient(135deg, rgba(5, 5, 18, 0.9), rgba(22, 18, 40, 0.9)); backdrop-filter: blur(14px); white-space: nowrap; }
-    .pill-accent { border: 1px solid rgba(0, 255, 170, 0.8); box-shadow: 0 0 10px rgba(0, 255, 170, 0.35); color: #dffff8; }
-    .pill-dot { position: relative; padding-left: 1.6rem; }
-    .pill-dot::before { content: ""; position: absolute; left: 0.65rem; top: 50%; transform: translateY(-50%); width: 7px; height: 7px; border-radius: 999px; background: #00ff88; box-shadow: 0 0 8px rgba(0, 255, 136, 0.9), 0 0 14px rgba(0, 255, 136, 0.7); }
-    .tagline { font-size: 0.9rem; color: var(--text-muted); }
-    .tagline span { color: var(--accent-alt); font-weight: 600; }
-    .discord-btn { margin-top: 0.3rem; display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.45rem 0.95rem; border-radius: 999px; border: 1px solid rgba(88, 101, 242, 0.8); background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.17), rgba(8, 10, 25, 0.96)); color: #e4e6ff; font-size: 0.8rem; text-decoration: none; letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; box-shadow: 0 0 10px rgba(88, 101, 242, 0.5); transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease; }
-    .discord-btn:hover { transform: translateY(-1px); box-shadow: 0 12px 26px rgba(0, 0, 0, 0.65), 0 0 14px rgba(88, 101, 242, 0.8); background: radial-gradient(circle at top left, rgba(88, 101, 242, 0.25), rgba(8, 10, 25, 0.98)); }
-    .discord-dot { width: 8px; height: 8px; border-radius: 999px; background: #5865f2; }
-    .tos-box { max-width: 1600px; margin: 0 auto 1.5rem; padding: 0.75rem 1.5rem; font-size: 0.8rem; text-align: left; color: var(--text-muted); display: flex; flex-wrap: wrap; gap: 0.75rem; align-items: flex-start; border-top: 1px solid rgba(255, 255, 255, 0.05); border-bottom: 1px solid rgba(255, 255, 255, 0.05); background: linear-gradient(90deg, rgba(5,5,12,0.9), rgba(10,10,22,0.9)); backdrop-filter: blur(16px); }
-    .tos-label { font-weight: 600; text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; padding: 0.25rem 0.65rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.18); background: rgba(5, 5, 18, 0.95); color: #f0f0f0; }
-    .tos-text span { color: var(--accent-alt); font-weight: 500; }
-    .tabs-wrapper { max-width: 1600px; margin: 1.1rem auto 0.7rem; padding: 0 1.5rem; display: flex; justify-content: flex-start; }
-    .tabs { display: inline-flex; gap: 0.5rem; padding: 0.25rem; border-radius: 999px; background: rgba(6, 6, 14, 0.95); border: 1px solid rgba(255, 255, 255, 0.08); box-shadow: 0 12px 26px rgba(0,0,0,0.7); }
-    .tab-btn { border: none; outline: none; padding: 0.35rem 0.95rem; border-radius: 999px; font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; background: transparent; color: var(--text-muted); transition: background 0.18s ease, color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease; white-space: nowrap; }
-    .tab-btn.active { background: radial-gradient(circle at top left, rgba(255, 0, 102, 0.35), rgba(0, 0, 0, 0.95)); color: #fff; box-shadow: 0 0 12px rgba(255, 0, 102, 0.7), 0 10px 24px rgba(0, 0, 0, 0.85); transform: translateY(-1px); }
-    .section-head { margin: 0 auto 0.4rem; max-width: 1600px; text-align: left; padding: 0 1.5rem; }
-    .section-head p { margin: 0; font-size: 0.95rem; color: var(--text-muted); line-height: 1.5; }
-    .section-head strong { color: var(--accent); font-weight: 600; }
-    .container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.4rem; padding: 0 1.5rem; }
-    .after-grid-note { max-width: 1600px; margin: 1rem auto 0; padding: 0 1.5rem; font-size: 0.75rem; color: var(--text-muted); text-align: left; line-height: 1.5; }
-    .game { position: relative; border-radius: 18px; overflow: hidden; cursor: pointer; background: var(--card-bg); border: 1px solid rgba(255, 255, 255, 0.06); box-shadow: 0 12px 28px rgba(0, 0, 0, 0.9); transform-origin: center; transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease, background 0.22s ease; }
-    .game:hover { transform: translateY(-6px); border-color: rgba(0, 255, 255, 0.55); box-shadow: 0 18px 40px rgba(0, 0, 0, 0.95), 0 0 18px rgba(0, 255, 255, 0.25); background: linear-gradient(145deg, rgba(11, 11, 22, 0.98), rgba(5, 10, 18, 0.98)); }
-    .game-img-wrap { position: relative; overflow: hidden; aspect-ratio: 16 / 9; }
-    .game img { width: 100%; height: 100%; object-fit: cover; display: block; filter: saturate(1.05) contrast(1.03); transition: transform 0.35s ease, filter 0.35s ease; transform-origin: center; }
-    .game:hover img { transform: scale(1.04); filter: saturate(1.15) contrast(1.08) brightness(1.02); }
-    .overlay-gradient { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 55%); opacity: 0.95; pointer-events: none; }
-    .corner-badges { position: absolute; top: 0.6rem; left: 0.7rem; display: flex; gap: 0.35rem; z-index: 3; }
-    .os-badge { display: inline-flex; align-items: center; gap: 0.25rem; padding: 0.15rem 0.55rem; border-radius: 999px; background: rgba(0, 0, 0, 0.75); border: 1px solid rgba(0, 200, 255, 0.8); backdrop-filter: blur(6px); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; color: #e2f8ff; }
-    .os-logo { width: 14px; height: 14px; background-image: url("https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Windows_logo_-_2021.svg/1024px-Windows_logo_-_2021.svg.png"); background-size: contain; background-repeat: no-repeat; background-position: center; filter: drop-shadow(0 0 4px rgba(0, 200, 255, 0.9)); flex-shrink: 0; }
-    .cat-badge { padding: 0.15rem 0.6rem; border-radius: 999px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; border: 1px solid rgba(255, 255, 255, 0.18); backdrop-filter: blur(6px); color: #f5f5f5; white-space: nowrap; background: rgba(255, 0, 102, 0.16); border-color: rgba(255, 0, 102, 0.85); color: #ffd9ec; }
-    .game-content { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.9rem 1rem 0.95rem; text-align: left; display: flex; flex-direction: column; gap: 0.4rem; }
-    .game-title { font-family: 'Orbitron', sans-serif; font-size: 1.05rem; letter-spacing: 0.08em; text-transform: uppercase; text-shadow: 0 0 6px rgba(0, 0, 0, 1); }
-    .game-meta { display: flex; justify-content: space-between; align-items: center; font-size: 0.78rem; color: var(--text-muted); }
-    .game-badges { display: flex; flex-wrap: wrap; gap: 0.35rem; margin-top: 0.35rem; }
-    .badge { font-size: 0.7rem; padding: 0.23rem 0.55rem; border-radius: 999px; border: 1px solid rgba(255, 255, 255, 0.12); background: rgba(6, 6, 10, 0.92); backdrop-filter: blur(8px); text-transform: uppercase; letter-spacing: 0.12em; white-space: nowrap; }
-    .badge-hot { border-color: rgba(255, 0, 102, 0.85); box-shadow: 0 0 8px rgba(255, 0, 102, 0.45); }
-    .badge-safe { border-color: rgba(0, 255, 255, 0.75); box-shadow: 0 0 8px rgba(0, 255, 255, 0.4); }
-    .badge-free { border-color: rgba(0, 255, 170, 0.9); box-shadow: 0 0 8px rgba(0, 255, 170, 0.45); }
-    .badge-ver { border-style: dashed; opacity: 0.85; }
-    .status-chip { padding: 0.2rem 0.6rem; border-radius: 999px; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.12em; border: 1px solid rgba(255, 255, 255, 0.16); background: rgba(5, 5, 12, 0.96); backdrop-filter: blur(10px); color: #eaf6ff; white-space: nowrap; }
-    .download-hint { font-size: 0.7rem; text-align: right; opacity: 0.85; display: flex; align-items: center; gap: 0.3rem; }
-    .download-dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); box-shadow: 0 0 9px rgba(255, 0, 102, 0.9); flex-shrink: 0; }
-    footer { margin: 0 0 1.75rem; font-size: 0.85rem; color: var(--text-muted); text-align: center; flex-shrink: 0; }
-    footer span { color: var(--accent); }
-    .toast { position: fixed; left: 50%; bottom: 1.75rem; transform: translateX(-50%) translateY(120%); padding: 0.85rem 1.3rem; border-radius: 999px; font-size: 0.9rem; background: radial-gradient(circle at top left, rgba(255, 0, 102, 0.95), rgba(30, 10, 35, 0.98)); color: #fff; border: 1px solid rgba(255, 255, 255, 0.18); box-shadow: 0 14px 35px rgba(0, 0, 0, 0.85), 0 0 22px rgba(255, 0, 102, 0.7); backdrop-filter: blur(18px); opacity: 0; pointer-events: none; transition: transform 0.35s cubic-bezier(0.21, 0.79, 0.32, 1.12), opacity 0.35s ease; z-index: 99; display: flex; align-items: center; gap: 0.6rem; text-shadow: 0 0 8px rgba(0, 0, 0, 0.9); }
-    .toast.show { transform: translateX(-50%) translateY(0%); opacity: 1; pointer-events: auto; }
-    .toast-emoji { font-size: 1.1rem; }
-    .toast-text strong { color: #ffe0f0; }
-    pre { background: rgba(0,0,0,0.4); padding: 1rem; border-radius: 12px; overflow-x: auto; font-size: 0.8rem; text-align: left; margin: 0.5rem 0; border: 1px solid rgba(255,255,255,0.1); }
-  </style>
+<meta charset="UTF-8">
+<title>🔥 Cosmic MIDI Generator</title>
+<style>
+body {
+  margin:0;
+  font-family: 'Segoe UI', sans-serif;
+  background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
+  color:white;
+  text-align:center;
+}
+
+h1 {
+  font-size:40px;
+  margin:20px;
+  text-shadow:0 0 20px cyan;
+}
+
+.container {
+  background: rgba(0,0,0,0.6);
+  padding:20px;
+  border-radius:15px;
+  width:600px;
+  margin:auto;
+  box-shadow:0 0 40px rgba(0,255,255,0.3);
+}
+
+select, input {
+  padding:10px;
+  margin:10px;
+  border-radius:8px;
+  border:none;
+  font-size:16px;
+}
+
+button {
+  padding:12px 25px;
+  font-size:18px;
+  border:none;
+  border-radius:10px;
+  cursor:pointer;
+  background:linear-gradient(45deg,cyan,magenta);
+  color:black;
+  font-weight:bold;
+  transition:0.2s;
+}
+
+button:hover {
+  transform:scale(1.1);
+}
+</style>
 </head>
 <body>
-  <header>
-    <div class="brand">
-      <h1>Olly's Logitech Scripts</h1>
-      <p class="subtitle">Clean, humanized Lua scripts for Logitech G HUB. Instant copy. Use at your own risk.</p>
-    </div>
-    <div class="header-right">
-      <div class="pill-row">
-        <div class="pill pill-dot">Status: Online</div>
-        <div class="pill pill-accent">Free & Clean</div>
-      </div>
-      <a class="discord-btn" href="https://discord.gg/eGhnq2U3VX" target="_blank" rel="noopener noreferrer">
-        <span class="discord-dot"></span>
-        <span>Join Discord</span>
-      </a>
-      <div class="tagline">
-        Made with <span>rage</span> &amp; <span>love</span> — 2025
-      </div>
-    </div>
-  </header>
 
-  <div class="tos-box">
-    <div class="tos-label">Important</div>
-    <div class="tos-text">
-      These are Logitech Lua scripts for personal testing/educational use only. No guarantees of undetectability — anti-cheats evolve constantly.
-      You are fully responsible for how you use them and for following game ToS. Test in creative/private modes first.
-    </div>
-  </div>
+<h1>🌌 Cosmic MIDI Generator</h1>
 
-  <main>
-    <div class="section-head">
-      <p>
-        <strong>Tip:</strong> Click any card → script auto-copies to your clipboard. Paste into Logitech G HUB → Scripts tab.<br>
-        <strong>Tune values</strong> (base_pull, base_delay) to match your DPI/sensitivity for best feel.
-      </p>
-    </div>
+<div class="container">
 
-    <div class="container" id="games"></div>
+<label>BPM:</label>
+<input type="number" id="bpm" value="120"><br>
 
-    <div class="after-grid-note">
-      All scripts are free and open. Adjust randomization/pull strength to keep it natural. Stay safe.
-    </div>
-  </main>
+<label>Octave:</label>
+<input type="number" id="octave" value="4"><br>
 
-  <footer>
-    <span>Olly</span> — stay sharp
-  </footer>
+<label>Style:</label>
+<select id="style">
+  <option>Dark Fantasy</option>
+  <option>Trap</option>
+  <option>Lofi</option>
+  <option>Interstellar</option>
+  <option>Ambience</option>
+  <option>Soundtrack</option>
+</select><br>
 
-  <div class="toast" id="toast">
-    <span class="toast-emoji">🔥</span>
-    <span class="toast-text" id="toast-text"></span>
-  </div>
+<button onclick="generateMIDI()">Generate MIDI</button>
 
-  <script>
-    const games = [
-      {
-        name: "Script",
-        img: "https://i.ibb.co/v416PvcX/image-psd-5.png",
-        category: "Scripts",
-        status: "Undetected, Humanized & Smooth",
-        script: `-- Logitech Lua Script for Pro X Superlight 2 (Fortnite)
--- Advanced recoil control: Smooth, randomized pull-down for clean ADS shots
--- Toggle with Caps Lock, burst mode toggle with Num Lock
--- Adjust values for your sensitivity/DPI
--- USE AT OWN RISK: Test in creative, EAC can flag unnatural inputs
+</div>
 
-EnablePrimaryMouseButtonEvents(true);
+<script>
 
--- Configurable settings
-local base_pull = 2;          -- Base downward pull (pixels). Tune for your DPI.
-local max_pull_vary = 1.5;    -- Max random pull variation (pixels).
-local base_delay = 7;         -- Base sleep delay (ms). Lower = faster, riskier.
-local delay_vary = 3;         -- Max random delay variation (ms).
-local burst_mode = false;     -- Burst mode for semi-auto weapons (toggle with Num Lock).
-local burst_duration = 150;   -- Burst pull duration (ms).
-local enable_recoil = false;  -- Global toggle.
+// Basic Scales
+const scales = {
+  minor:[0,2,3,5,7,8,10],
+  major:[0,2,4,5,7,9,11],
+  harmonicMinor:[0,2,3,5,7,8,11],
+  pentatonic:[0,3,5,7,10]
+};
 
-function OnEvent(event, arg)
-    -- Toggle recoil with Caps Lock (adjust arg if needed)
-    if (event == "G_PRESSED" and arg == 6) then
-        enable_recoil = not enable_recoil;
-        if enable_recoil then OutputLogMessage("Recoil Control: ON\\n"); else OutputLogMessage("Recoil Control: OFF\\n"); end
-    end
+function getStyleSettings(style){
+  switch(style){
+    case "Dark Fantasy":
+      return {scale:"harmonicMinor", notes:16, octaveShift:0};
+    case "Trap":
+      return {scale:"minor", notes:24, octaveShift:-1};
+    case "Lofi":
+      return {scale:"pentatonic", notes:12, octaveShift:0};
+    case "Interstellar":
+      return {scale:"major", notes:8, octaveShift:1};
+    case "Ambience":
+      return {scale:"major", notes:6, octaveShift:1};
+    case "Soundtrack":
+      return {scale:"minor", notes:20, octaveShift:0};
+  }
+}
 
-    -- Toggle burst mode with Num Lock (adjust arg if needed)
-    if (event == "G_PRESSED" and arg == 7) then
-        burst_mode = not burst_mode;
-        if burst_mode then OutputLogMessage("Burst Mode: ON\\n"); else OutputLogMessage("Burst Mode: OFF\\n"); end
-    end
+function generateMIDI(){
 
-    if enable_recoil then
-        if (event == "MOUSE_BUTTON_PRESSED" and arg == 1) then  -- Left click (shooting)
-            local start_time = GetRunningTime();
-            repeat
-                if IsMouseButtonPressed(3) then  -- Right click held (ADS)
-                    local elapsed = GetRunningTime() - start_time;
-                    local pull_factor = math.min(1, elapsed / 500);
-                    local pull = base_pull * pull_factor;
-                    pull = pull + (math.random() * max_pull_vary * 2 - max_pull_vary);
-                    local delay = base_delay + math.random(-delay_vary, delay_vary);
+  let bpm = parseInt(document.getElementById("bpm").value);
+  let octave = parseInt(document.getElementById("octave").value);
+  let style = document.getElementById("style").value;
 
-                    MoveMouseRelative(math.random(-1, 1), math.floor(pull + 0.5));
-                    Sleep(math.max(5, delay));
+  let settings = getStyleSettings(style);
+  let scale = scales[settings.scale];
+  let noteCount = settings.notes;
 
-                    if burst_mode and elapsed > burst_duration then break; end
-                else
-                    Sleep(10);
-                end
-            until not IsMouseButtonPressed(1);
-        end
-    end
-end`
-      }
-    ];
+  let events = [];
 
-    const container = document.getElementById("games");
-    const toast = document.getElementById("toast");
-    const toastText = document.getElementById("toast-text");
-    let toastTimeout;
+  let time = 0;
+  for(let i=0;i<noteCount;i++){
+    let note = 60 + (octave+settings.octaveShift-4)*12 + scale[Math.floor(Math.random()*scale.length)];
+    events.push({time:time,note:note});
+    time += 240;
+  }
 
-    function showToast(message) {
-      toastText.innerHTML = message;
-      toast.classList.add("show");
-      if (toastTimeout) clearTimeout(toastTimeout);
-      toastTimeout = setTimeout(() => toast.classList.remove("show"), 3000);
-    }
+  let midiData = createMIDI(events,bpm);
+  downloadMIDI(midiData);
+}
 
-    function renderGames() {
-      container.innerHTML = "";
-      games.forEach(game => {
-        const card = document.createElement("article");
-        card.className = "game";
-        card.innerHTML = `
-          <div class="game-img-wrap">
-            <div class="corner-badges">
-              <div class="os-badge">
-                <span class="os-logo"></span>
-                <span>Windows</span>
-              </div>
-              <div class="cat-badge">Scripts</div>
-            </div>
-            <img src="${game.img}" alt="${game.name}">
-            <div class="overlay-gradient"></div>
-            <div class="game-content">
-              <div class="game-title">${game.name}</div>
-              <div class="game-meta">
-                <span class="status-chip">${game.status}</span>
-                <div class="download-hint">
-                  <span class="download-dot"></span>
-                  <span>Copy to clipboard</span>
-                </div>
-              </div>
-              <div class="game-badges">
-                <span class="badge badge-free">Free</span>
-                <span class="badge badge-safe">Humanized</span>
-                <span class="badge badge-ver">Ready for G HUB</span>
-              </div>
-            </div>
-          </div>
-          <pre>${game.script}</pre>
-        `;
-        card.onclick = async () => {
-          try {
-            await navigator.clipboard.writeText(game.script);
-            showToast(`<strong>${game.name}</strong> copied to clipboard! Paste into G HUB → Scripts.`);
-          } catch (err) {
-            showToast(`Copy failed — select the code manually.`);
-          }
-        };
-        container.appendChild(card);
-      });
-    }
+// Create simple MIDI
+function createMIDI(events,bpm){
+  let header = [
+    0x4d,0x54,0x68,0x64,
+    0x00,0x00,0x00,0x06,
+    0x00,0x00,
+    0x00,0x01,
+    0x00,0x60
+  ];
 
-    renderGames();
-  </script>
+  let track = [];
+  track.push(0x00,0xff,0x51,0x03,
+    (60000000/bpm)>>16 & 0xff,
+    (60000000/bpm)>>8 & 0xff,
+    (60000000/bpm)&0xff);
 
-  <!-- Anti right-click / basic anti-debug (kept from original) -->
-  <script>
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('keydown', e => {
-      if (e.key === 'F12') e.preventDefault();
-      if (e.ctrlKey && e.shiftKey && (e.key === 'I' || e.key === 'J' || e.key === 'C')) e.preventDefault();
-      if (e.ctrlKey && (e.key === 'U' || e.key === 'S' || e.key === 'P')) e.preventDefault();
-    });
-  </script>
+  events.forEach(e=>{
+    track.push(0x00,0x90,e.note,0x64);
+    track.push(0x81,0x40,0x80,e.note,0x40);
+  });
+
+  track.push(0x00,0xff,0x2f,0x00);
+
+  let trackHeader = [
+    0x4d,0x54,0x72,0x6b,
+    (track.length>>24)&0xff,
+    (track.length>>16)&0xff,
+    (track.length>>8)&0xff,
+    track.length&0xff
+  ];
+
+  return new Uint8Array([...header,...trackHeader,...track]);
+}
+
+function downloadMIDI(data){
+  let blob = new Blob([data],{type:"audio/midi"});
+  let url = URL.createObjectURL(blob);
+  let a = document.createElement("a");
+  a.href = url;
+  a.download = "cosmic.mid";
+  a.click();
+}
+
+</script>
+
 </body>
 </html>
