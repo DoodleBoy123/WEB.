@@ -2,175 +2,132 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>🔥 Cosmic MIDI Generator</title>
+<title>Cydia iOS 8 Style</title>
 <style>
-body {
-  margin:0;
-  font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(135deg,#0f0c29,#302b63,#24243e);
-  color:white;
-  text-align:center;
-}
+    body {
+        margin: 0;
+        padding: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", sans-serif;
+        background: #0a0a0a; /* Classic Cydia dark background */
+        color: #fff;
+        height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
 
-h1 {
-  font-size:40px;
-  margin:20px;
-  text-shadow:0 0 20px cyan;
-}
+    .container {
+        width: 320px;
+        background: rgba(30, 30, 30, 0.95);
+        border-radius: 12px;
+        box-shadow: 0 0 40px rgba(0, 0, 0, 0.8),
+                    inset 0 1px 0 rgba(255,255,255,0.08);
+        overflow: hidden;
+        border: 1px solid #444;
+    }
 
-.container {
-  background: rgba(0,0,0,0.6);
-  padding:20px;
-  border-radius:15px;
-  width:600px;
-  margin:auto;
-  box-shadow:0 0 40px rgba(0,255,255,0.3);
-}
+    .header {
+        background: linear-gradient(to bottom, #1f1f1f, #0f0f0f);
+        padding: 15px;
+        text-align: center;
+        border-bottom: 1px solid #333;
+    }
 
-select, input {
-  padding:10px;
-  margin:10px;
-  border-radius:8px;
-  border:none;
-  font-size:16px;
-}
+    .header h1 {
+        margin: 0;
+        font-size: 18px;
+        font-weight: 600;
+        color: #00aaff;
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+    }
 
-button {
-  padding:12px 25px;
-  font-size:18px;
-  border:none;
-  border-radius:10px;
-  cursor:pointer;
-  background:linear-gradient(45deg,cyan,magenta);
-  color:black;
-  font-weight:bold;
-  transition:0.2s;
-}
+    .content {
+        padding: 15px;
+    }
 
-button:hover {
-  transform:scale(1.1);
-}
+    button {
+        width: 100%;
+        padding: 14px 15px;
+        margin: 6px 0;
+        background: linear-gradient(to bottom, #555555, #3a3a3a);
+        color: white;
+        border: 1px solid #777;
+        border-radius: 8px;
+        font-size: 17px;
+        font-weight: 500;
+        box-shadow: 
+            inset 0 1px 0 rgba(255,255,255,0.3),
+            0 2px 4px rgba(0,0,0,0.5);
+        text-shadow: 0 1px 2px rgba(0,0,0,0.8);
+        cursor: pointer;
+        transition: all 0.15s ease;
+    }
+
+    button:hover {
+        background: linear-gradient(to bottom, #666666, #4a4a4a);
+        border-color: #888;
+    }
+
+    button:active {
+        background: linear-gradient(to bottom, #3a3a3a, #555555);
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
+        transform: translateY(1px);
+    }
+
+    /* Cydia-style blue accent button */
+    .accent {
+        background: linear-gradient(to bottom, #007aff, #0062cc);
+        border-color: #0088ff;
+    }
+
+    .accent:hover {
+        background: linear-gradient(to bottom, #0088ff, #0070e0);
+    }
+
+    .hidden {
+        display: none;
+    }
+
+    .section-title {
+        color: #888;
+        font-size: 13px;
+        text-transform: uppercase;
+        margin: 12px 0 6px 8px;
+        font-weight: 600;
+    }
 </style>
 </head>
 <body>
 
-<h1>🌌 Cosmic MIDI Generator</h1>
-
 <div class="container">
-
-<label>BPM:</label>
-<input type="number" id="bpm" value="120"><br>
-
-<label>Octave:</label>
-<input type="number" id="octave" value="4"><br>
-
-<label>Style:</label>
-<select id="style">
-  <option>Dark Fantasy</option>
-  <option>Trap</option>
-  <option>Lofi</option>
-  <option>Interstellar</option>
-  <option>Ambience</option>
-  <option>Soundtrack</option>
-</select><br>
-
-<button onclick="generateMIDI()">Generate MIDI</button>
-
+    <div class="header">
+        <h1>Cydia • Olly's Shit</h1>
+    </div>
+    
+    <div class="content">
+        <button onclick="toggleProjects()" class="accent">Projects</button>
+        
+        <div id="projects" class="hidden">
+            <div class="section-title">My Projects</div>
+            <button onclick="go('https://example.com/1')">Project 1</button>
+            <button onclick="go('https://example.com/2')">Project 2</button>
+            <button onclick="go('https://example.com/3')">Project 3</button>
+            <button onclick="go('https://example.com/4')">Project 4</button>
+            <button onclick="go('https://example.com/5')">Project 5</button>
+        </div>
+    </div>
 </div>
 
 <script>
-
-// Basic Scales
-const scales = {
-  minor:[0,2,3,5,7,8,10],
-  major:[0,2,4,5,7,9,11],
-  harmonicMinor:[0,2,3,5,7,8,11],
-  pentatonic:[0,3,5,7,10]
-};
-
-function getStyleSettings(style){
-  switch(style){
-    case "Dark Fantasy":
-      return {scale:"harmonicMinor", notes:16, octaveShift:0};
-    case "Trap":
-      return {scale:"minor", notes:24, octaveShift:-1};
-    case "Lofi":
-      return {scale:"pentatonic", notes:12, octaveShift:0};
-    case "Interstellar":
-      return {scale:"major", notes:8, octaveShift:1};
-    case "Ambience":
-      return {scale:"major", notes:6, octaveShift:1};
-    case "Soundtrack":
-      return {scale:"minor", notes:20, octaveShift:0};
-  }
+function toggleProjects() {
+    let proj = document.getElementById("projects");
+    proj.classList.toggle("hidden");
 }
 
-function generateMIDI(){
-
-  let bpm = parseInt(document.getElementById("bpm").value);
-  let octave = parseInt(document.getElementById("octave").value);
-  let style = document.getElementById("style").value;
-
-  let settings = getStyleSettings(style);
-  let scale = scales[settings.scale];
-  let noteCount = settings.notes;
-
-  let events = [];
-
-  let time = 0;
-  for(let i=0;i<noteCount;i++){
-    let note = 60 + (octave+settings.octaveShift-4)*12 + scale[Math.floor(Math.random()*scale.length)];
-    events.push({time:time,note:note});
-    time += 240;
-  }
-
-  let midiData = createMIDI(events,bpm);
-  downloadMIDI(midiData);
+function go(url) {
+    window.location.href = url;
 }
-
-// Create simple MIDI
-function createMIDI(events,bpm){
-  let header = [
-    0x4d,0x54,0x68,0x64,
-    0x00,0x00,0x00,0x06,
-    0x00,0x00,
-    0x00,0x01,
-    0x00,0x60
-  ];
-
-  let track = [];
-  track.push(0x00,0xff,0x51,0x03,
-    (60000000/bpm)>>16 & 0xff,
-    (60000000/bpm)>>8 & 0xff,
-    (60000000/bpm)&0xff);
-
-  events.forEach(e=>{
-    track.push(0x00,0x90,e.note,0x64);
-    track.push(0x81,0x40,0x80,e.note,0x40);
-  });
-
-  track.push(0x00,0xff,0x2f,0x00);
-
-  let trackHeader = [
-    0x4d,0x54,0x72,0x6b,
-    (track.length>>24)&0xff,
-    (track.length>>16)&0xff,
-    (track.length>>8)&0xff,
-    track.length&0xff
-  ];
-
-  return new Uint8Array([...header,...trackHeader,...track]);
-}
-
-function downloadMIDI(data){
-  let blob = new Blob([data],{type:"audio/midi"});
-  let url = URL.createObjectURL(blob);
-  let a = document.createElement("a");
-  a.href = url;
-  a.download = "cosmic.mid";
-  a.click();
-}
-
 </script>
 
 </body>
