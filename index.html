@@ -3,7 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>MZEDS Archive</title>
 
 <script src="https://cdn.tailwindcss.com"></script>
@@ -14,6 +13,7 @@ body {
     background: #0b0f14;
     color: #d1d5db;
     font-family: Inter, system-ui;
+    margin: 0;
 }
 
 /* Layout */
@@ -88,79 +88,52 @@ body {
 
     <!-- SIDEBAR -->
     <div class="sidebar p-4">
-
         <div class="text-lg font-semibold mb-6 flex items-center gap-2">
-            <i class="fa-solid fa-database"></i>
-            MZEDS
+            <i class="fa-solid fa-database"></i> MZEDS
         </div>
-
         <div class="space-y-2 text-sm">
-
-            <div class="sidebar-item" onclick="setFilter('ALL')">
-                <i class="fa-solid fa-layer-group"></i> All Mods
-            </div>
-
-            <div class="sidebar-item" onclick="setFilter('SPRX')">
-                <i class="fa-solid fa-code"></i> SPRX Menus
-            </div>
-
-            <div class="sidebar-item" onclick="setFilter('SKIN')">
-                <i class="fa-solid fa-shirt"></i> Skin Packs
-            </div>
-
-            <div class="sidebar-item" onclick="setFilter('TOOL')">
-                <i class="fa-solid fa-wrench"></i> Tools
-            </div>
-
+            <div class="sidebar-item" onclick="setFilter('ALL')"><i class="fa-solid fa-layer-group"></i> All Mods</div>
+            <div class="sidebar-item" onclick="setFilter('SPRX')"><i class="fa-solid fa-code"></i> SPRX Menus</div>
+            <div class="sidebar-item" onclick="setFilter('SKIN')"><i class="fa-solid fa-shirt"></i> Skin Packs</div>
+            <div class="sidebar-item" onclick="setFilter('TOOL')"><i class="fa-solid fa-wrench"></i> Tools</div>
         </div>
-
     </div>
 
     <!-- CONTENT -->
     <div class="content">
-
         <!-- TOP BAR -->
         <div class="flex justify-between items-center mb-8">
-
             <div>
                 <div class="text-xl text-white font-semibold">Archive</div>
                 <div class="text-sm text-gray-400">Minecraft PS3 Mods</div>
             </div>
-
             <div class="relative">
                 <i class="fa-solid fa-search absolute left-3 top-3 text-gray-500"></i>
-                <input id="search" placeholder="Search..."
-                class="search pl-10 pr-4 py-2 rounded w-64">
+                <input id="search" placeholder="Search..." class="search pl-10 pr-4 py-2 rounded w-64">
             </div>
-
         </div>
 
         <!-- GRID -->
         <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
-
     </div>
 
 </div>
 
 <!-- MODAL -->
 <div id="details" class="hidden fixed inset-0 modal flex items-center justify-center bg-black/70">
-
-<div class="bg-[#0f141a] border border-[#1f2933] p-8 rounded-xl max-w-lg w-full relative">
-
-<button onclick="closeDetails()" class="absolute top-4 right-4">
-    <i class="fa-solid fa-xmark"></i>
-</button>
-
-<div id="detailsContent"></div>
-
-</div>
+    <div class="bg-[#0f141a] border border-[#1f2933] p-8 rounded-xl max-w-lg w-full relative">
+        <button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+            <i class="fa-solid fa-xmark"></i>
+        </button>
+        <div id="detailsContent"></div>
+    </div>
 </div>
 
-<!-- DATA -->
+<!-- JS -->
 <script>
 const mods = [
-{
-    name: "DownCraft v4.5",
+  {
+    name: "DownCraft v4.5 CFW/HEN",
     type: "SPRX",
     version: "4.5",
     creator: "MisakiDev",
@@ -168,9 +141,9 @@ const mods = [
     features: ["ESP", "Fly", "Give Items"],
     image: "https://img.youtube.com/vi/Yal7zzdhfxo/maxresdefault.jpg",
     download: "https://www.mediafire.com/file/zfdmi3goo8j35gu/%255BDownCraft%255D_V4.5_Premium%2528CREATED_BY_MisakiDev%2529.rar/file"
-},
-{
-    name: "UltimateCraft V3",
+  },
+  {
+    name: "UltimateCraft V3 CFW/HEN",
     type: "SPRX",
     version: "V3 (Beta)",
     creator: "MayhemModding",
@@ -178,7 +151,27 @@ const mods = [
     features: ["World Edit", "Player Mods"],
     image: "https://i.ibb.co/KjPVyq2Y/image.png",
     download: "https://mega.nz/file/j0M2GaZQ#LCIniPsIoUw53b77PgERF8iphvxUl2LXcTHVXzkC7ZY"
-}
+  },
+  {
+    name: "MZEDS Skin Packs",
+    type: "SKIN",
+    version: "1.0",
+    creator: "MZEDS Team",
+    description: "A collection of 800+ custom skins for Minecraft PS3.",
+    features: ["50+ Skins", "Easy Installation"],
+    image: "https://i.ytimg.com/vi/AcL9cZBuur4/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDmo8vSTzO8LroGPO_Qk-BRIDXqcw",
+    download: "https://www.mediafire.com/file/qj76cv8pmawhwc2/HUGE_PS3_SKIN_PACK.rar/file"
+  },
+  {
+    name: "PCK Studio",
+    type: "TOOL",
+    version: "7.0",
+    creator: "PhoenixARC",
+    description: "All-in-one tool for editing minecraft PS3 skin packs and maps etc...",
+    features: ["Skin Editing", "One-Click Install"],
+    image: "https://images.gamebanana.com/img/ss/tools/6468e20425a88.jpg",
+    download: "https://github.com/LCERD/PCK-Studio/releases/download/Beta/PCK-Studio-Beta-23w19c.zip"
+  }
 ];
 
 let currentFilter = "ALL";
@@ -191,11 +184,9 @@ function setFilter(f) {
 function render() {
     const grid = document.getElementById("grid");
     const search = document.getElementById("search").value.toLowerCase();
-
     grid.innerHTML = "";
 
     mods.forEach(mod => {
-
         if (currentFilter !== "ALL" && mod.type !== currentFilter) return;
         if (!mod.name.toLowerCase().includes(search)) return;
 
@@ -203,36 +194,30 @@ function render() {
         div.className = "card p-5 rounded-lg cursor-pointer";
 
         div.innerHTML = `
-            <div class="text-white font-medium mb-2">${mod.name}</div>
-            <div class="text-xs text-gray-500 mb-3">${mod.type}</div>
+            <img src="${mod.image}" class="mb-3 w-full rounded-lg object-cover">
+            <div class="text-white font-medium mb-1">${mod.name}</div>
+            <div class="text-xs text-gray-500 mb-2">${mod.type}</div>
             <div class="text-sm text-gray-400">${mod.description}</div>
         `;
-
         div.onclick = () => openDetails(mod);
         grid.appendChild(div);
     });
 }
 
 document.getElementById("search").addEventListener("input", render);
-render();
 
 function openDetails(mod) {
     document.body.style.overflow = "hidden";
-
     document.getElementById("detailsContent").innerHTML = `
+        <img src="${mod.image}" class="mb-4 w-full rounded-lg">
         <h2 class="text-xl text-white mb-2">${mod.name}</h2>
         <div class="text-sm mb-2">Version: ${mod.version}</div>
         <div class="text-sm mb-4">Creator: ${mod.creator}</div>
-
         <ul class="text-sm text-gray-400 mb-4">
             ${mod.features.map(f => `<li>- ${f}</li>`).join("")}
         </ul>
-
-        <a href="${mod.download}" class="bg-blue-600 px-4 py-2 rounded">
-            Download
-        </a>
+        <a href="${mod.download}" class="bg-blue-600 px-4 py-2 rounded inline-block">Download</a>
     `;
-
     document.getElementById("details").classList.remove("hidden");
 }
 
@@ -240,6 +225,9 @@ function closeDetails() {
     document.getElementById("details").classList.add("hidden");
     document.body.style.overflow = "auto";
 }
+
+// initial render
+render();
 </script>
 
 </body>
