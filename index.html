@@ -1,250 +1,270 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MZEDS • LEGACY MOD ARCHIVES</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap');
-       
-        body {
-            font-family: 'Inter', system_ui, sans-serif;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-            background: #0a0f1a;
-            color: #e0f2e9;
-        }
-       
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -2;
-            filter: brightness(0.45) contrast(1.2) saturate(0.9);
-        }
-       
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(10,15,26,0.92), rgba(10,15,26,0.98));
-            z-index: -1;
-        }
-       
-        .glass {
-            background: rgba(15, 23, 42, 0.75);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(0, 255, 157, 0.25);
-            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.08);
-        }
-       
-        .neon-button {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            background: rgba(0, 255, 157, 0.05);
-            border: 2px solid #00ff9d;
-            color: #00ff9d;
-            box-shadow: 0 0 15px rgba(0, 255, 157, 0.3);
-        }
-       
-        .neon-button:hover {
-            background: rgba(0, 255, 157, 0.15);
-            box-shadow: 0 0 25px rgba(0, 255, 157, 0.5);
-            transform: translateY(-3px);
-            color: white;
-        }
-       
-        .project-card {
-            transition: all 0.4s ease;
-        }
-       
-        .project-card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: #00ff9d;
-            box-shadow: 0 0 30px rgba(0, 255, 157, 0.25);
-        }
-       
-        .glow-text {
-            text-shadow: 0 0 20px #00ff9d,
-                         0 0 40px rgba(0, 255, 157, 0.6);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>MZEDS Archive</title>
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+<style>
+body {
+    background: #0b0f14;
+    color: #d1d5db;
+    font-family: Inter, system-ui;
+}
+
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 40px 20px;
+}
+
+.card {
+    background: #11161d;
+    border: 1px solid #1f2933;
+    transition: 0.2s;
+}
+
+.card:hover {
+    border-color: #3b82f6;
+    transform: translateY(-2px);
+}
+
+.btn {
+    background: #1f2933;
+    border: 1px solid #374151;
+}
+
+.btn:hover {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: white;
+}
+
+.tag {
+    font-size: 11px;
+    padding: 3px 8px;
+    background: #1f2933;
+    border: 1px solid #374151;
+}
+</style>
 </head>
-<body class="min-h-screen text-white">
-    <!-- Background Video -->
-    <video class="video-bg" autoplay loop muted playsinline>
-        <source src="https://r4---sn-5hne6nzy.googlevideo.com/videoplayback?expire=1774669874&ei=0vvGabulBoGcp-oPuMXqmQw&ip=80.187.123.132&id=o-AMIAtrBGTMxtkua-Q3K1CHfDiXIMR9q40cwg0mfOeNo9&itag=18&source=youtube&requiressl=yes&xpc=EgVo2aDSNQ%3D%3D&rms=au%2Cau&bui=AUUZDGIghbnqPjFIqcs-pyDhRPU49LhVYqXuAmVtl4IU7BqBCJWqoxqURvzNC9cdy3pfPmDTqOskcoJY&spc=jlWavRQLnFIboDSt-K5UJvuOxu88Rjd0jPIR_nra4pFNnb7d6h2S&vprv=1&svpuc=1&mime=video%2Fmp4&rqh=1&gir=yes&clen=10206212&ratebypass=yes&dur=130.008&lmt=1760475017314467&fexp=51565115,51565681,51791334&c=ANDROID_VR&txp=5538534&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cxpc%2Cbui%2Cspc%2Cvprv%2Csvpuc%2Cmime%2Crqh%2Cgir%2Cclen%2Cratebypass%2Cdur%2Clmt&sig=AHEqNM4wRQIhAO99gY3sixOmpTu2y1DhywkrGB_w27RT7qokYrS6KDtZAiBeiYuV-ba4pRhinL3zSM87SKL4RMcAIqtNov1LEfcq9Q%3D%3D&pot=Mt4EiFpLgLEkGgOIZK9SdTiPj7jBIZGgkbfTonfE5o3y3FTjehZViu28ClP73xzcX6MeRQdEoDfOlDR97LaeqjhzdNosPuWot7dxjjwuSwdYJ2DiMDjhvdU8vYHC_oC0KraL6f-e8DGeELETsRF4WMfh4SE0TFDOgtG29QWvibpaQC9E5P-JIlAbQOhEcFLUhdO9Y-ealIf5sp6W219vVi3D3hM6pXrwEIMCZMaXk_n9s3v2aI_qptDYRz9u2J9LFsR_qFDEW5bu2XGbA4C30yYKUIoyU_qc_6iZtdV4TX65mmUlGXxl5kt67gvVSwsCJ2cjfYRRaeyfY9gq62nwAXeJn5KdJDXZBeVGMb2HLtB87hwKCHEzB0vIftKRo9fm2Xp4pjDF2cwSP-hkQR79uxV5U6CsURrjYB_K6cPhdtqj49F5x2P3UBRf6HCSrIPXDfF8F7n1HjbxbY2wqz4kiUWT2qbBGpqGJc3AjOCQWUv5rfrKLg5thBbOt_Ltta97b4P1C3GVZVcgFx9M5mtaq9LhmSeBqYP0UOvIYuNVAIDyIGxMZ15tBPmjAGgkc0dgRb8rrgVllmOp1Gw-gYeNKyHZvWiJLMLJpbtBKUDO4rHRWZgJLVbzoCWXvlqS6-_2aDBVNEbBkF-RoLdzgNJmpdN3DaeFpzgb3UAPP-3COgD6S2tF3GMGRQV_HiMEevC9DKVF5u7ZSsEisjZb-SNVAVaQldTXZCuOvwf68tCx9xFcBCSfQBk2Annu2UE0mKM6BPOpltMOmdZkwvzVje9w9kQV65Anzragkx55NBurmpLL&cps=286&redirect_counter=1&cm2rm=sn-4g5e6d7s&rrc=191&req_id=11491898e43ba3ee&cms_redirect=yes&cmsv=e&met=1774648295,&mh=HK&mip=185.132.132.51&mm=34&mn=sn-5hne6nzy&ms=ltu&mt=1774647643&mv=m&mvi=4&pl=22&lsparams=cps,met,mh,mip,mm,mn,ms,mv,mvi,pl,rms&lsig=APaTxxMwRgIhAMuEkxANMFNQqzlnQ0E_FHqlBUy3yKOCV2OFIzqmO9XWAiEA9OoNbjJ8-WuUQr_ZjakPsltH0hmHDNChNKoHEo42tms%3D" type="video/mp4">
-    </video>
-    <div class="overlay"></div>
 
-    <div class="relative z-10 min-h-screen flex flex-col items-center justify-center px-6 py-16">
-        <!-- Header -->
-        <div class="text-center mb-16">
-            <div class="inline-flex items-center gap-3 mb-4">
-                <div class="w-3 h-3 bg-[#00ff9d] rounded-full animate-pulse"></div>
-                <span class="text-xs tracking-[4px] text-[#00ff9d] font-medium">EST 2016 • PS3 / LCE ARCHIVES</span>
-            </div>
-            <h1 class="text-7xl font-black tracking-tighter glow-text">MZEDS</h1>
-            <p class="text-2xl font-semibold text-[#00ff9d] mt-2 tracking-wide">LEGACY MOD ARCHIVES</p>
-            <p class="mt-6 max-w-md mx-auto text-gray-400">Old-gen Minecraft never dies. Premium SPRX menus, skin packs & tools for real players.</p>
+<body>
+
+<!-- 🎥 BACKGROUND VIDEO -->
+<video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-10">
+    <source src="background.mp4" type="video/mp4">
+</video>
+<div class="fixed inset-0 bg-black/70 -z-10"></div>
+
+<!-- NAV -->
+<div class="border-b border-[#1f2933] bg-black/40 backdrop-blur">
+    <div class="container flex justify-between items-center">
+
+        <div class="text-xl font-semibold tracking-tight flex items-center gap-2">
+            <i class="fa-solid fa-database"></i>
+            MZEDS
         </div>
 
-        <!-- Main Actions -->
-        <div class="flex flex-col sm:flex-row gap-6 w-full max-w-lg">
-            <a href="https://www.youtube.com/@Endoofficial111" target="_blank"
-               class="neon-button flex-1 flex items-center justify-center gap-3 py-6 rounded-2xl text-lg font-semibold">
-                <i class="fab fa-youtube text-3xl"></i>
-                <span>YOUTUBE CHANNEL</span>
+        <div class="flex gap-6 text-sm items-center">
+            <a href="#" class="hover:text-white flex items-center gap-1">
+                <i class="fa-solid fa-box-archive"></i> Archive
             </a>
-            
-            <button onclick="showProjects()" 
-                    class="neon-button flex-1 flex items-center justify-center gap-3 py-6 rounded-2xl text-lg font-semibold">
-                <i class="fas fa-download text-3xl"></i>
-                <span>BROWSE MODS</span>
-            </button>
-            
-            <a href="https://discord.com/invite/YOUR_LINK" target="_blank"
-               class="neon-button flex-1 flex items-center justify-center gap-3 py-6 rounded-2xl text-lg font-semibold">
-                <i class="fab fa-discord text-3xl"></i>
-                <span>JOIN DISCORD</span>
+            <a href="#" class="hover:text-white flex items-center gap-1">
+                <i class="fa-solid fa-book"></i> Docs
+            </a>
+            <a href="#" class="hover:text-white flex items-center gap-1">
+                <i class="fa-brands fa-discord"></i> Discord
             </a>
         </div>
 
-        <div class="mt-20 text-xs text-[#00ff9d]/60 tracking-widest font-mono">
-            CFW • HEN • SPRX • SKIN PACKS
-        </div>
-    </div>
-
-    <!-- Projects Modal -->
-    <div id="projectsMenu" class="hidden fixed inset-0 bg-black/95 z-50 flex items-center justify-center p-6">
-        <div class="glass w-full max-w-3xl rounded-3xl p-10 max-h-[92vh] overflow-y-auto">
-            <div class="flex items-center justify-between mb-10">
-                <h2 class="text-4xl font-bold text-[#00ff9d]">MOD ARCHIVES</h2>
-                <button onclick="hideProjects()" class="text-4xl text-gray-400 hover:text-white transition-colors">✕</button>
-            </div>
-
-            <div class="space-y-12">
-                <!-- LCE Section -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                        <span class="text-[#00ff9d]">MINECRAFT LEGACY CONSOLE EDITION • TU19</span>
-                    </h3>
-                    <div class="grid gap-4">
-                        <a href="https://www.swisstransfer.com/d/d07a2bb3-b60d-4a79-8a7a-6a0e5fe1751f" target="_blank"
-                           class="project-card block p-8 bg-black/60 border border-transparent rounded-2xl hover:border-[#00ff9d]">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="text-lg font-medium">Huge Custom Skin Pack</div>
-                                    <div class="text-sm text-gray-400 mt-1">LCE ONLY • High quality skins</div>
-                                </div>
-                                <i class="fas fa-arrow-down text-[#00ff9d] text-2xl"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <!-- PS3 Section -->
-                <div>
-                    <h3 class="text-xl font-semibold text-white mb-6 flex items-center gap-3">
-                        <span class="text-[#00ff9d]">MINECRAFT PLAYSTATION 3 EDITION</span>
-                    </h3>
-                    <div class="grid gap-4">
-                        <a href="https://www.swisstransfer.com/d/8a4fa415-5b0b-45e6-84f7-dbf36510af94" target="_blank"
-                           class="project-card block p-8 bg-black/60 border border-transparent rounded-2xl hover:border-[#00ff9d]">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="text-lg font-medium">Huge Custom Skin Pack</div>
-                                    <div class="text-sm text-gray-400 mt-1">PS3 ONLY</div>
-                                </div>
-                                <i class="fas fa-arrow-down text-[#00ff9d] text-2xl"></i>
-                            </div>
-                        </a>
-                        
-                        <a href="https://www.mediafire.com/file/zfdmi3goo8j35gu/%255BDownCraft%255D_V4.5_Premium%2528CREATED_BY_MisakiDev%2529.rar/file" target="_blank"
-                           class="project-card block p-8 bg-black/60 border border-transparent rounded-2xl hover:border-[#00ff9d]">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="text-lg font-medium">DownCraft SPRX v4.5</div>
-                                    <div class="text-sm text-gray-400 mt-1">Premium mod menu</div>
-                                </div>
-                                <span class="text-xs bg-[#00ff9d]/10 text-[#00ff9d] px-3 py-1 rounded-full">SPRX</span>
-                            </div>
-                        </a>
-                        
-                        <a href="https://www.mediafire.com/file/4f28o3orxinshhy/UltimateCraftV2_%255BBLES-BLUS.rar/file" target="_blank"
-                           class="project-card block p-8 bg-black/60 border border-transparent rounded-2xl hover:border-[#00ff9d]">
-                            <div class="flex justify-between items-start">
-                                <div>
-                                    <div class="text-lg font-medium">UltimateCraft v2</div>
-                                    <div class="text-sm text-gray-400 mt-1">Full feature mod menu</div>
-                                </div>
-                                <span class="text-xs bg-[#00ff9d]/10 text-[#00ff9d] px-3 py-1 rounded-full">SPRX</span>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
-
-            <button onclick="hideProjects()" 
-                    class="mt-12 w-full py-7 bg-transparent border-2 border-[#00ff9d] text-[#00ff9d] hover:bg-[#00ff9d] hover:text-black font-semibold rounded-2xl text-lg transition-all">
-                CLOSE ARCHIVES
-            </button>
-        </div>
-    </div>
-
-    <script>
-        function showProjects() {
-            const menu = document.getElementById('projectsMenu');
-            menu.classList.remove('hidden');
-            menu.classList.add('flex');
-        }
-       
-        function hideProjects() {
-            const menu = document.getElementById('projectsMenu');
-            menu.classList.add('hidden');
-            menu.classList.remove('flex');
-        }
-
-        document.getElementById('projectsMenu').addEventListener('click', function(e) {
-            if (e.target === this) hideProjects();
-        });
-    </script>
-</body>
-<div class="fixed top-0 left-0 w-full z-50 flex justify-center mt-4">
-    <div class="glass flex items-center gap-6 px-6 py-3 rounded-2xl">
-
-        <!-- CFW / HEN -->
-        <div class="flex items-center gap-2">
-            <img src="https://www.consolereparaties.nl/wp-content/uploads/2017/11/PS3-reparatie.png" class="w-6 h-6 object-contain">
-            <span class="text-xs text-[#00ff9d] font-semibold tracking-wide">CFW / HEN</span>
-        </div>
-
-        <!-- Divider -->
-        <div class="w-px h-4 bg-[#00ff9d]/30"></div>
-
-        <!-- Evilnat -->
-        <div class="flex items-center gap-2">
-            <img src="https://i.imgur.com/T7d4gMz.png" class="w-6 h-6 object-contain">
-            <span class="text-xs text-gray-300">EVILNAT</span>
-        </div>
-
-        <!-- Rebug -->
-        <div class="flex items-center gap-2">
-            <img src="https://gbatemp.net/attachments/160536/" class="w-6 h-6 object-contain">
-            <span class="text-xs text-gray-300">REBUG</span>
-        </div>
-<!-- Rebug -->
-        <div class="flex items-center gap-2">
-            <img src="https://www.psx-place.com/data/attachments/33/33306-fbf1d9c4647ac59247e852a24ec8d16d.jpg" class="w-6 h-6 object-contain">
-            <span class="text-xs text-gray-300">HEN</span>
-        </div>
     </div>
 </div>
+
+<div class="container">
+
+    <!-- HERO -->
+    <div class="mb-12">
+        <h1 class="text-4xl font-semibold text-white flex items-center gap-3">
+            <i class="fa-brands fa-playstation"></i>
+            Minecraft PS3 Mod Archive
+        </h1>
+
+        <p class="text-gray-400 mt-2 max-w-lg">
+            Curated SPRX menus, tools and legacy content. Clean builds only.
+        </p>
+    </div>
+
+    <!-- SEARCH + FILTER -->
+    <div class="mb-6 flex gap-3 flex-wrap items-center">
+
+        <div class="relative">
+            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-500"></i>
+            <input id="search" placeholder="Search mods..."
+            class="bg-[#111] border border-[#333] pl-10 pr-4 py-2 rounded w-64">
+        </div>
+
+        <select id="filter" class="bg-[#111] border border-[#333] px-3 py-2 rounded">
+            <option value="ALL">All</option>
+            <option value="SPRX">SPRX</option>
+            <option value="SKIN">Skin Packs</option>
+            <option value="TOOL">Tools</option>
+        </select>
+
+    </div>
+
+    <!-- GRID -->
+    <div id="grid" class="grid md:grid-cols-2 gap-6"></div>
+
+</div>
+
+<!-- DETAILS PANEL -->
+<div id="details" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+
+<div class="bg-[#111] p-8 rounded-xl max-w-lg w-full relative">
+
+<button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+    <i class="fa-solid fa-xmark"></i>
+</button>
+
+<div id="detailsContent"></div>
+
+</div>
+</div>
+
+<!-- DATA -->
+<script>
+const mods = [
+{
+    name: "DownCraft v4.5",
+    type: "SPRX",
+    version: "4.5",
+    creator: "MisakiDev",
+    description: "Stable premium menu with clean UI.",
+    features: ["ESP", "Fly", "Give Items", "Host Tools"],
+    image: "https://via.placeholder.com/400x200",
+    download: "https://www.mediafire.com/"
+},
+{
+    name: "UltimateCraft v2",
+    type: "SPRX",
+    version: "V3",
+    creator: "Unknown",
+    description: "The UltimateCraft V3 Beta provides a comprehensive mod menu that includes various options for players to utilize.",
+    features: ["Armor and Weapons: Players can give themselves or others armor and weapons to boost their stats and combat abilities.", "Player Mods", "Fun Tools"],
+    image: "https://via.placeholder.com/400x200",
+    download: "https://www.mediafire.com/"
+},
+{
+    name: "Custom Skin Pack",
+    type: "SKIN",
+    version: "TU75",
+    creator: "MZED",
+    description: "Large Minecraft PS3 skin pack.",
+    features: ["100+ Skins"],
+    image: "https://via.placeholder.com/400x200",
+    download: "https://www.mediafire.com/"
+}
+];
+</script>
+
+<!-- LOGIC -->
+<script>
+function render() {
+    const grid = document.getElementById("grid");
+    const search = document.getElementById("search").value.toLowerCase();
+    const filter = document.getElementById("filter").value;
+
+    grid.innerHTML = "";
+
+    mods.forEach(mod => {
+
+        if (filter !== "ALL" && mod.type !== filter) return;
+        if (!mod.name.toLowerCase().includes(search)) return;
+
+        const div = document.createElement("div");
+        div.className = "card p-6 rounded-xl cursor-pointer";
+
+        div.innerHTML = `
+            <div class="flex justify-between mb-2">
+                <div class="text-white font-medium flex items-center gap-2">
+                    <i class="fa-solid fa-cube"></i>
+                    ${mod.name}
+                </div>
+                <div class="text-xs opacity-60 flex items-center gap-1">
+                    <i class="fa-solid fa-tag"></i> ${mod.type}
+                </div>
+            </div>
+
+            <div class="text-sm text-gray-400 mb-4">
+                ${mod.description}
+            </div>
+        `;
+
+        div.onclick = () => openDetails(mod);
+        grid.appendChild(div);
+    });
+}
+
+document.getElementById("search").addEventListener("input", render);
+document.getElementById("filter").addEventListener("change", render);
+
+render();
+
+function openDetails(mod) {
+
+    const panel = document.getElementById("details");
+    const content = document.getElementById("detailsContent");
+
+    content.innerHTML = `
+        <img src="${mod.image}" class="mb-4 rounded">
+
+        <h2 class="text-xl text-white mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-cube"></i>
+            ${mod.name}
+        </h2>
+
+        <div class="text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-code"></i> Version: ${mod.version}
+        </div>
+
+        <div class="text-sm mb-2 flex items-center gap-2">
+            <i class="fa-solid fa-user"></i> Creator: ${mod.creator}
+        </div>
+
+        <div class="mt-4 mb-2 text-sm text-gray-400">
+            ${mod.description}
+        </div>
+
+        <div class="mt-4">
+            <div class="text-sm mb-1 flex items-center gap-2">
+                <i class="fa-solid fa-list"></i> Features:
+            </div>
+
+            <ul class="text-sm text-gray-400">
+                ${mod.features.map(f => `<li>- ${f}</li>`).join("")}
+            </ul>
+        </div>
+
+        <div class="mt-6">
+            <a href="${mod.download}" target="_blank"
+            class="btn px-4 py-2 rounded inline-flex items-center gap-2 mt-2">
+            <i class="fa-solid fa-download"></i> Download
+            </a>
+        </div>
+    `;
+
+    panel.classList.remove("hidden");
+}
+
+function closeDetails() {
+    document.getElementById("details").classList.add("hidden");
+}
+</script>
+
+</body>
 </html>
