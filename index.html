@@ -16,118 +16,138 @@ body {
     font-family: Inter, system-ui;
 }
 
-.container {
-    max-width: 1100px;
-    margin: auto;
-    padding: 40px 20px;
+/* Layout */
+.app {
+    display: flex;
+    height: 100vh;
 }
 
-.card {
+/* Sidebar */
+.sidebar {
+    width: 240px;
+    background: rgba(10,15,20,0.9);
+    border-right: 1px solid #1f2933;
+    backdrop-filter: blur(10px);
+}
+
+.sidebar-item {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sidebar-item:hover {
     background: #11161d;
+}
+
+/* Content */
+.content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+}
+
+/* Cards */
+.card {
+    background: rgba(17,22,29,0.8);
     border: 1px solid #1f2933;
     transition: 0.2s;
+    backdrop-filter: blur(6px);
 }
 
 .card:hover {
     border-color: #3b82f6;
-    transform: translateY(-2px);
+    transform: translateY(-3px);
 }
 
-.btn {
-    background: #1f2933;
-    border: 1px solid #374151;
+/* Search */
+.search {
+    background: #11161d;
+    border: 1px solid #1f2933;
 }
 
-.btn:hover {
-    background: #2563eb;
-    border-color: #2563eb;
-    color: white;
-}
-
-.tag {
-    font-size: 11px;
-    padding: 3px 8px;
-    background: #1f2933;
-    border: 1px solid #374151;
+/* Modal */
+.modal {
+    backdrop-filter: blur(8px);
 }
 </style>
 </head>
 
 <body>
 
-<!-- 🎥 BACKGROUND VIDEO -->
+<!-- VIDEO BG -->
 <video autoplay muted loop playsinline class="fixed top-0 left-0 w-full h-full object-cover -z-10">
-    <source src="background.mp4" type="video/mp4">
+    <source src="./background.mp4">
 </video>
 <div class="fixed inset-0 bg-black/70 -z-10"></div>
 
-<!-- NAV -->
-<div class="border-b border-[#1f2933] bg-black/40 backdrop-blur">
-    <div class="container flex justify-between items-center">
+<div class="app">
 
-        <div class="text-xl font-semibold tracking-tight flex items-center gap-2">
+    <!-- SIDEBAR -->
+    <div class="sidebar p-4">
+
+        <div class="text-lg font-semibold mb-6 flex items-center gap-2">
             <i class="fa-solid fa-database"></i>
             MZEDS
         </div>
 
-        <div class="flex gap-6 text-sm items-center">
-            <a href="#" class="hover:text-white flex items-center gap-1">
-                <i class="fa-solid fa-box-archive"></i> Archive
-            </a>
-            <a href="#" class="hover:text-white flex items-center gap-1">
-                <i class="fa-solid fa-book"></i> Docs
-            </a>
-            <a href="#" class="hover:text-white flex items-center gap-1">
-                <i class="fa-brands fa-discord"></i> Discord
-            </a>
+        <div class="space-y-2 text-sm">
+
+            <div class="sidebar-item" onclick="setFilter('ALL')">
+                <i class="fa-solid fa-layer-group"></i> All Mods
+            </div>
+
+            <div class="sidebar-item" onclick="setFilter('SPRX')">
+                <i class="fa-solid fa-code"></i> SPRX Menus
+            </div>
+
+            <div class="sidebar-item" onclick="setFilter('SKIN')">
+                <i class="fa-solid fa-shirt"></i> Skin Packs
+            </div>
+
+            <div class="sidebar-item" onclick="setFilter('TOOL')">
+                <i class="fa-solid fa-wrench"></i> Tools
+            </div>
+
         </div>
 
     </div>
-</div>
 
-<div class="container">
+    <!-- CONTENT -->
+    <div class="content">
 
-    <!-- HERO -->
-    <div class="mb-12">
-        <h1 class="text-4xl font-semibold text-white flex items-center gap-3">
-            <i class="fa-brands fa-playstation"></i>
-            Minecraft PS3 Mod Archive
-        </h1>
+        <!-- TOP BAR -->
+        <div class="flex justify-between items-center mb-8">
 
-        <p class="text-gray-400 mt-2 max-w-lg">
-            Curated SPRX menus, tools and legacy content. Clean builds only.
-        </p>
-    </div>
+            <div>
+                <div class="text-xl text-white font-semibold">Archive</div>
+                <div class="text-sm text-gray-400">Minecraft PS3 Mods</div>
+            </div>
 
-    <!-- SEARCH + FILTER -->
-    <div class="mb-6 flex gap-3 flex-wrap items-center">
+            <div class="relative">
+                <i class="fa-solid fa-search absolute left-3 top-3 text-gray-500"></i>
+                <input id="search" placeholder="Search..."
+                class="search pl-10 pr-4 py-2 rounded w-64">
+            </div>
 
-        <div class="relative">
-            <i class="fa-solid fa-magnifying-glass absolute left-3 top-3 text-gray-500"></i>
-            <input id="search" placeholder="Search mods..."
-            class="bg-[#111] border border-[#333] pl-10 pr-4 py-2 rounded w-64">
         </div>
 
-        <select id="filter" class="bg-[#111] border border-[#333] px-3 py-2 rounded">
-            <option value="ALL">All</option>
-            <option value="SPRX">SPRX</option>
-            <option value="SKIN">Skin Packs</option>
-            <option value="TOOL">Tools</option>
-        </select>
+        <!-- GRID -->
+        <div id="grid" class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
 
     </div>
 
-    <!-- GRID -->
-    <div id="grid" class="grid md:grid-cols-2 gap-6"></div>
-
 </div>
 
-<!-- DETAILS PANEL -->
-<div id="details" class="hidden fixed inset-0 bg-black/80 flex items-center justify-center p-4">
+<!-- MODAL -->
+<div id="details" class="hidden fixed inset-0 modal flex items-center justify-center bg-black/70">
 
-<div class="bg-[#111] p-8 rounded-xl max-w-lg w-full relative">
+<div class="bg-[#0f141a] border border-[#1f2933] p-8 rounded-xl max-w-lg w-full relative">
 
-<button onclick="closeDetails()" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+<button onclick="closeDetails()" class="absolute top-4 right-4">
     <i class="fa-solid fa-xmark"></i>
 </button>
 
@@ -145,64 +165,47 @@ const mods = [
     version: "4.5",
     creator: "MisakiDev",
     description: "Stable premium menu with clean UI.",
-    features: ["ESP", "Fly", "Give Items", "Host Tools"],
+    features: ["ESP", "Fly", "Give Items"],
     image: "https://via.placeholder.com/400x200",
-    download: "https://www.mediafire.com/"
+    download: "#"
 },
 {
-    name: "UltimateCraft v2",
+    name: "UltimateCraft V3",
     type: "SPRX",
     version: "V3",
     creator: "Unknown",
-    description: "The UltimateCraft V3 Beta provides a comprehensive mod menu that includes various options for players to utilize.",
-    features: ["Armor and Weapons: Players can give themselves or others armor and weapons to boost their stats and combat abilities.", "Player Mods", "Fun Tools"],
+    description: "Full testing mod menu.",
+    features: ["World Edit", "Player Mods"],
     image: "https://via.placeholder.com/400x200",
-    download: "https://www.mediafire.com/"
-},
-{
-    name: "Custom Skin Pack",
-    type: "SKIN",
-    version: "TU75",
-    creator: "MZED",
-    description: "Large Minecraft PS3 skin pack.",
-    features: ["100+ Skins"],
-    image: "https://via.placeholder.com/400x200",
-    download: "https://www.mediafire.com/"
+    download: "#"
 }
 ];
-</script>
 
-<!-- LOGIC -->
-<script>
+let currentFilter = "ALL";
+
+function setFilter(f) {
+    currentFilter = f;
+    render();
+}
+
 function render() {
     const grid = document.getElementById("grid");
     const search = document.getElementById("search").value.toLowerCase();
-    const filter = document.getElementById("filter").value;
 
     grid.innerHTML = "";
 
     mods.forEach(mod => {
 
-        if (filter !== "ALL" && mod.type !== filter) return;
+        if (currentFilter !== "ALL" && mod.type !== currentFilter) return;
         if (!mod.name.toLowerCase().includes(search)) return;
 
         const div = document.createElement("div");
-        div.className = "card p-6 rounded-xl cursor-pointer";
+        div.className = "card p-5 rounded-lg cursor-pointer";
 
         div.innerHTML = `
-            <div class="flex justify-between mb-2">
-                <div class="text-white font-medium flex items-center gap-2">
-                    <i class="fa-solid fa-cube"></i>
-                    ${mod.name}
-                </div>
-                <div class="text-xs opacity-60 flex items-center gap-1">
-                    <i class="fa-solid fa-tag"></i> ${mod.type}
-                </div>
-            </div>
-
-            <div class="text-sm text-gray-400 mb-4">
-                ${mod.description}
-            </div>
+            <div class="text-white font-medium mb-2">${mod.name}</div>
+            <div class="text-xs text-gray-500 mb-3">${mod.type}</div>
+            <div class="text-sm text-gray-400">${mod.description}</div>
         `;
 
         div.onclick = () => openDetails(mod);
@@ -211,58 +214,31 @@ function render() {
 }
 
 document.getElementById("search").addEventListener("input", render);
-document.getElementById("filter").addEventListener("change", render);
-
 render();
 
 function openDetails(mod) {
+    document.body.style.overflow = "hidden";
 
-    const panel = document.getElementById("details");
-    const content = document.getElementById("detailsContent");
+    document.getElementById("detailsContent").innerHTML = `
+        <h2 class="text-xl text-white mb-2">${mod.name}</h2>
+        <div class="text-sm mb-2">Version: ${mod.version}</div>
+        <div class="text-sm mb-4">Creator: ${mod.creator}</div>
 
-    content.innerHTML = `
-        <img src="${mod.image}" class="mb-4 rounded">
+        <ul class="text-sm text-gray-400 mb-4">
+            ${mod.features.map(f => `<li>- ${f}</li>`).join("")}
+        </ul>
 
-        <h2 class="text-xl text-white mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-cube"></i>
-            ${mod.name}
-        </h2>
-
-        <div class="text-sm mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-code"></i> Version: ${mod.version}
-        </div>
-
-        <div class="text-sm mb-2 flex items-center gap-2">
-            <i class="fa-solid fa-user"></i> Creator: ${mod.creator}
-        </div>
-
-        <div class="mt-4 mb-2 text-sm text-gray-400">
-            ${mod.description}
-        </div>
-
-        <div class="mt-4">
-            <div class="text-sm mb-1 flex items-center gap-2">
-                <i class="fa-solid fa-list"></i> Features:
-            </div>
-
-            <ul class="text-sm text-gray-400">
-                ${mod.features.map(f => `<li>- ${f}</li>`).join("")}
-            </ul>
-        </div>
-
-        <div class="mt-6">
-            <a href="${mod.download}" target="_blank"
-            class="btn px-4 py-2 rounded inline-flex items-center gap-2 mt-2">
-            <i class="fa-solid fa-download"></i> Download
-            </a>
-        </div>
+        <a href="${mod.download}" class="bg-blue-600 px-4 py-2 rounded">
+            Download
+        </a>
     `;
 
-    panel.classList.remove("hidden");
+    document.getElementById("details").classList.remove("hidden");
 }
 
 function closeDetails() {
     document.getElementById("details").classList.add("hidden");
+    document.body.style.overflow = "auto";
 }
 </script>
 
