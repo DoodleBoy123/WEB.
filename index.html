@@ -19,28 +19,31 @@ body {
 /* Layout */
 .app {
     display: flex;
+    flex-direction: row;
     height: 100vh;
 }
 
-/* Sidebar */
+/* Responsive sidebar */
 .sidebar {
     width: 240px;
     background: rgba(10,15,20,0.9);
     border-right: 1px solid #1f2933;
     backdrop-filter: blur(10px);
+    transition: transform 0.3s ease;
 }
 
-.sidebar-item {
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    border-radius: 8px;
-}
-
-.sidebar-item:hover {
-    background: #11161d;
+@media (max-width: 768px) {
+    .app {
+        flex-direction: column;
+    }
+    .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #1f2933;
+    }
+    .content {
+        padding: 15px;
+    }
 }
 
 /* Content */
@@ -56,6 +59,8 @@ body {
     border: 1px solid #1f2933;
     transition: 0.2s;
     backdrop-filter: blur(6px);
+    cursor: pointer;
+    border-radius: 0.5rem;
 }
 
 .card:hover {
@@ -63,10 +68,32 @@ body {
     transform: translateY(-3px);
 }
 
+/* Grid responsive tweaks */
+#grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 1rem;
+}
+
+/* Sidebar items */
+.sidebar-item {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    border-radius: 8px;
+}
+
+.sidebar-item:hover {
+    background: #11161d;
+}
+
 /* Search */
 .search {
     background: #11161d;
     border: 1px solid #1f2933;
+    color: #d1d5db;
 }
 
 /* Modal */
@@ -191,7 +218,7 @@ function render() {
         if (!mod.name.toLowerCase().includes(search)) return;
 
         const div = document.createElement("div");
-        div.className = "card p-5 rounded-lg cursor-pointer";
+        div.className = "card p-5";
 
         div.innerHTML = `
             <img src="${mod.image}" class="mb-3 w-full rounded-lg object-cover">
